@@ -82,3 +82,35 @@ export async function createResource(formData: FormData) {
   }
   redirect(`/dashboard/${section}?company=${companyId}&saved=1`);
 }
+
+
+export async function deleteResource(formData: FormData) {
+  const section = clean(formData.get("section"), 20) as ResourceSection;
+  const companyId = clean(formData.get("company_id"), 80);
+  const resourceId = clean(formData.get("resource_id"), 80);
+  if (!["garages", "vehicles", "careers"].includes(section) || !companyId || !resourceId) {
+    redirect("/dashboard?error=resource");
+  }
+
+  const supabase = await createSupabaseServerClient();
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  if (authError || !user) redirect("/login");
+
+  // Preserve operational history: a career with recorded runs cannot be deleted.
+  if (section === "careers") {
+    const { count, error } = await supabase
+      .from("career_runs")
+      .select("id", { count: "exact", head: true })
+      .eq("company_id", companyId)
+      .eq("career_id", resourceId);
+    if (error || (count ?? 0) > 0) {
+      redirect(`/dashboard/careers?company=${companyId}&error=linked`);
+    }
+  }
+
+  const result = await supabase.from(section).delete().eq("id", resourceId).eq("company_id", companyId);
+  if (result.error) {
+    redirect(`/dashboard/${section}?company=${companyId}&error=delete`);
+  }
+  redirect(`/dashboard/${section}?company=${companyId}&deleted=1`);
+}
