@@ -10,13 +10,90 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
   const supabase = await createSupabaseServerClient();
   const { data: { user }, error: authError } = await supabase.auth.getUser();
   if (authError || !user) redirect("/login");
-  const { data: companies, error } = await supabase.from("companies").select("id,name,slug,created_at").order("created_at", { ascending: false });
+
+  const { data: companies, error } = await supabase
+    .from("companies")
+    .select("id,name,slug,created_at")
+    .order("created_at", { ascending: false });
+
+  // Counts are queried through the signed-in user's RLS session, never a service-role key.
+  const companySummaries = await Promise.all((companies ?? []).map(async (company) => {
+    const [garages, vehicles, careers, membership] = await Promise.all([
+      supabase.from("garages").select("id", { count: "exact", head: true }).eq("company_id", company.id),
+      supabase.from("vehicles").select("id", { count: "exact", head: true }).eq("company_id", company.id),
+      supabase.from("careers").select("id", { count: "exact", head: true }).eq("company_id", company.id),
+      supabase.from("company_members").select("role").eq("company_id", company.id).eq("user_id", user.id).maybeSingle()
+    ]);
+    return {
+      ...company,
+      garageCount: garages.count ?? 0,
+      vehicleCount: vehicles.count ?? 0,
+      careerCount: careers.count ?? 0,
+      role: membership.data?.role ?? "membro"
+    };
+  }));
+
+  const roleLabels: Record<string, string> = {
+    owner: "Proprietária(o)",
+    admin: "Administradora(or)",
+    dispatcher: "Despachante",
+    driver: "Motorista",
+    membro: "Membro"
+  };
+
   return <main className="dashboard-page">
-    <header className="dashboard-nav"><Link className="brand" href="/"><span className="brand-mark">EV</span><span>EMPRESA VIRTUAL <b>OMSI</b></span></Link><span>{user.email}</span><form action="/auth/signout" method="post"><button className="button button-outline button-small" type="submit">Sair</button></form></header>
-    <div className="dashboard-shell"><div className="eyebrow">ÁREA AUTENTICADA</div><h1>Visão geral</h1><p className="dashboard-intro">Gerencie suas empresas. Os dados abaixo vêm do banco real.</p>
-    {params.created && <div className="auth-notice">Empresa criada com sucesso.</div>}{params.error && <div className="auth-error">Não foi possível criar a empresa. Verifique o nome e tente novamente.</div>}
-    <section className="dashboard-panel"><div className="panel-heading"><div><h2>Minhas empresas</h2><p>Comece criando sua empresa virtual.</p></div><span className="count-pill">{companies?.length ?? 0} cadastrada(s)</span></div>
-    <form action={createCompany} className="company-form"><label htmlFor="company-name">Nome da empresa</label><div className="company-form-row"><input id="company-name" name="name" required minLength={2} maxLength={120} placeholder="Nome da empresa virtual" /><button className="button button-primary" type="submit">Criar empresa →</button></div></form>
-    {error ? <p className="auth-error">Não foi possível carregar suas empresas.</p> : companies?.length ? <div className="company-list">{companies.map(company => <article className="company-row" key={company.id}><span className="company-avatar">{company.name.slice(0,1).toUpperCase()}</span><span className="company-name"><b>{company.name}</b><small>/{company.slug}</small></span><span className="company-status">Ativa</span></article>)}</div> : <div className="empty-state"><h3>Nenhuma empresa por enquanto</h3><p>Crie a primeira empresa usando o formulário acima. Sua conta será vinculada como proprietária.</p></div>}</section>
-    <section className="dashboard-panel"><h2>Próximos módulos</h2><div className="roadmap-grid"><div><b>Garagens e frota</b><small>Cadastro por empresa</small></div><div><b>Carreiras</b><small>Planejamento e histórico</small></div><div><b>Integrações OMSI</b><small>Adaptadores validados</small></div></div></section><Link className="text-link" href="/">← Voltar ao site público</Link></div></main>;
+    <header className="dashboard-nav">
+      <Link className="brand" href="/"><span className="brand-mark">EV</span><span>EMPRESA VIRTUAL <b>OMSI</b></span></Link>
+      <span>{user.email}</span>
+      <form action="/auth/signout" method="post"><button className="button button-outline button-small" type="submit">Sair</button></form>
+    </header>
+    <div className="dashboard-shell">
+      <div className="eyebrow">ÁREA AUTENTICADA</div>
+      <h1>Visão geral</h1>
+      <p className="dashboard-intro">Sua central de gestão para OMSI 2 clássico e openOMSI. As informações são carregadas do banco real, respeitando as permissões da sua conta.</p>
+      {params.created && <div className="auth-notice">Empresa criada com sucesso e vinculada à sua conta.</div>}
+      {params.error && <div className="auth-error">Não foi possível criar a empresa. Verifique o nome e tente novamente.</div>}
+
+      <section className="dashboard-panel">
+        <div className="panel-heading">
+          <div><h2>Minhas empresas</h2><p>Empresas nas quais sua conta possui associação.</p></div>
+          <span className="count-pill">{companies?.length ?? 0} cadastrada(s)</span>
+        </div>
+        <form action={createCompany} className="company-form">
+          <label htmlFor="company-name">Nome da empresa</label>
+          <div className="company-form-row">
+            <input id="company-name" name="name" required minLength={2} maxLength={120} placeholder="Nome da empresa virtual" />
+            <button className="button button-primary" type="submit">Criar empresa →</button>
+          </div>
+        </form>
+        {error ? <p className="auth-error">Não foi possível carregar suas empresas. Atualize a página ou tente novamente mais tarde.</p> :
+          companySummaries.length ? <div className="company-list">{companySummaries.map(company =>
+            <article className="company-row company-row-expanded" key={company.id}>
+              <span className="company-avatar">{company.name.slice(0, 1).toUpperCase()}</span>
+              <span className="company-name"><b>{company.name}</b><small>/{company.slug}</small><small>{roleLabels[company.role] ?? "Membro"}</small></span>
+              <div className="company-metrics">
+                <span><b>{company.garageCount}</b><small>Garagens</small></span>
+                <span><b>{company.vehicleCount}</b><small>Veículos</small></span>
+                <span><b>{company.careerCount}</b><small>Carreiras</small></span>
+              </div>
+              <span className="company-status">Ativa</span>
+            </article>
+          )}</div> :
+          <div className="empty-state"><h3>Nenhuma empresa por enquanto</h3><p>Crie a primeira empresa usando o formulário acima. Sua conta será vinculada como proprietária automaticamente pelo banco.</p></div>}
+      </section>
+
+      <section className="dashboard-panel">
+        <div className="panel-heading"><div><h2>Central de operação</h2><p>Os módulos abaixo serão habilitados por etapas, com persistência e autorização reais.</p></div></div>
+        <div className="roadmap-grid">
+          <div><b>Garagens e frota</b><small>Base de dados preparada · interface em construção</small></div>
+          <div><b>Carreiras e escalas</b><small>Planejamento e histórico · integração futura</small></div>
+          <div><b>Motoristas e funções</b><small>Associação por empresa e permissões</small></div>
+          <div><b>Integrações OMSI</b><small>Adaptadores separados e ainda não liberados</small></div>
+          <div><b>Planos e assinatura</b><small>Catálogo inicial · cobrança desativada</small></div>
+          <div><b>Sincronização offline</b><small>Planejada após validar os contratos dos plugins</small></div>
+        </div>
+      </section>
+      <Link className="text-link" href="/">← Voltar ao site público</Link>
+    </div>
+  </main>;
 }
