@@ -31,3 +31,14 @@ html[data-theme="light"] .auth-form input:focus{border-color:#246a91;box-shadow:
 html[data-theme="light"] .resource-company-picker select{background:#fff;color:#1d2d3b;border-color:#b8c8d5}
 html[data-theme="light"] .resource-nav a,html[data-theme="light"] .company-quick-links a{border-color:#b8c8d5;color:#246a91;background:#f8fafc}
 @media(max-width:700px){.company-quick-links{width:100%;margin-left:48px}.resource-details{gap:8px 14px}.resource-company-picker .company-form-row{flex-direction:column}}
+
+
+/* Formulários de cadastro reais para os módulos da empresa */
+.resource-create-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-top:18px}
+.resource-create-form label{display:grid;gap:7px;color:var(--muted);font-size:11px;font-weight:700}
+.resource-create-form input,.resource-create-form select{width:100%;min-width:0;height:44px;padding:0 12px;border:1px solid #34485c;border-radius:9px;background:#09121c;color:var(--text);font:inherit;font-size:12px}
+.resource-create-form input:focus,.resource-create-form select:focus,.resource-company-picker select:focus{outline:2px solid #70e2dc55;border-color:var(--cyan)}
+.resource-create-form .button,.resource-create-form .form-hint{grid-column:1/-1;justify-self:start}
+.resource-create-form .form-hint{margin:0;color:var(--muted);font-size:10px;line-height:1.6}
+html[data-theme="light"] .resource-create-form input,html[data-theme="light"] .resource-create-form select{background:#fff;color:#1d2d3b;border-color:#b8c8d5}
+@media(max-width:640px){.resource-create-form{grid-template-columns:1fr}.resource-create-form .button{width:100%;justify-content:center}}
