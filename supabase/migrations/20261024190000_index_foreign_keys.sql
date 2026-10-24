@@ -1,0 +1,9 @@
+create index if not exists audit_events_actor_idx on public.audit_events(actor_user_id);
+create index if not exists career_runs_career_idx on public.career_runs(career_id);
+create index if not exists career_runs_driver_idx on public.career_runs(driver_id);
+create index if not exists career_runs_vehicle_idx on public.career_runs(vehicle_id);
+create index if not exists careers_created_by_idx on public.careers(created_by);
+create index if not exists companies_created_by_idx on public.companies(created_by);
+create index if not exists subscriptions_company_idx on public.subscriptions(company_id);
+create index if not exists subscriptions_plan_idx on public.subscriptions(plan_code);
+create index if not exists vehicles_garage_idx on public.vehicles(garage_id);
