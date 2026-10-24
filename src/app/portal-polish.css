@@ -130,3 +130,12 @@ html[data-theme="light"] .resource-create-form input,html[data-theme="light"] .r
 @media(max-width:1050px){.public-sidebar{width:220px}.public-content{width:calc(100% - 220px);margin-left:220px}.public-app .hero{grid-template-columns:1fr;max-width:820px}.public-app .hero-visual{max-width:660px;width:100%;margin:auto}.public-side-link{font-size:11px}}
 @media(max-width:700px){.public-app{display:block}.public-sidebar{position:relative;width:100%;height:auto;inset:auto;padding:12px 16px 10px;border-right:0;border-bottom:1px solid #e2e8ef}.public-brand{height:40px}.public-nav-label,.sidebar-plan-card,.public-sidebar-footer{display:none}.public-side-nav{display:flex;gap:5px;overflow-x:auto;padding:10px 0 0;scrollbar-width:thin}.public-side-link{white-space:nowrap;min-height:37px;padding:0 10px;font-size:10px;gap:7px;flex:none}.public-side-link>span{width:17px}.public-content{width:100%;margin:0}.public-topbar{height:64px;padding:0 17px;position:relative}.topbar-mobile-brand{display:grid;place-items:center}.topbar-context small{font-size:7px}.topbar-context b{font-size:11px}.topbar-status{display:none}.public-app .hero{width:calc(100% - 34px);padding-top:44px;padding-bottom:46px;gap:28px}.public-app .hero h1{font-size:clamp(34px,9vw,46px)}.public-app .trust-inner{width:calc(100% - 34px)}.public-app .section{width:calc(100% - 34px);padding-top:58px;padding-bottom:58px}.public-app .pricing-section .shell{width:calc(100% - 34px)}.public-app .status-card{padding:25px 20px}.public-app .footer-inner{width:calc(100% - 34px)}}
 @media(prefers-reduced-motion:reduce){.public-side-link{transition:none}}
+
+
+/* Ações destrutivas explícitas nos recursos da empresa */
+.resource-delete-button{border:1px solid #e6c7c7;background:#fff;color:#a13d3d;border-radius:8px;padding:8px 10px;font:700 10px inherit;cursor:pointer;align-self:center;white-space:nowrap}
+.resource-delete-button:hover{background:#fff1f1;border-color:#d99b9b}
+.resource-row>form{display:flex;align-self:center}
+html[data-theme="dark"] .resource-delete-button{background:#241519;border-color:#67363b;color:#ffb9bd}
+html[data-theme="dark"] .resource-delete-button:hover{background:#3a1d22}
+@media(max-width:640px){.resource-row{flex-wrap:wrap}.resource-row>form{margin-left:48px}.resource-delete-button{padding:8px 12px}}
