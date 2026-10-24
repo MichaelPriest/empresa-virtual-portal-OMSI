@@ -224,3 +224,39 @@ html[data-theme="dark"] .resource-delete-button:hover{background:#3a1d22}
 /* O tema claro é fixo nas telas de autenticação e no painel; ocultar o alternador nessas rotas evita um controle que não altera essas telas. */
 body:has(.auth-page) .theme-toggle,
 body:has(.dashboard-page) .theme-toggle{display:none!important}
+
+
+/* Corrige estilos escuros globais que ainda vazavam para componentes do tema claro. */
+html[data-theme="dark"] .dashboard-page .resource-delete-button{
+  color:#a13d3d;background:#fff;border-color:#e6c7c7;
+}
+html[data-theme="dark"] .dashboard-page .resource-delete-button:hover{
+  color:#8d2929;background:#fff1f1;border-color:#d99b9b;
+}
+html[data-theme="dark"] .auth-page .auth-assurances span{
+  color:#167e88;background:#effafa;border-color:#c9e9e8;
+}
+html[data-theme="dark"] .auth-page .auth-form input{
+  color:#24384b;background:#fff;border-color:#cbd8e3;
+}
+html[data-theme="dark"] .auth-page .auth-toggle,
+html[data-theme="dark"] .auth-page .auth-back{
+  color:#167e88;
+}
+.dashboard-nav>span{
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(38vw,360px);font-size:11px;
+}
+.dashboard-nav form{margin:0}
+@media(max-width:520px){
+  .dashboard-nav{gap:10px;height:64px}
+  .dashboard-nav .brand{font-size:8px;letter-spacing:.7px;gap:7px}
+  .dashboard-nav .brand-mark{width:30px;height:30px}
+  .dashboard-nav>span{display:none}
+  .dashboard-nav .button{min-height:33px;padding:0 9px;font-size:10px}
+  .dashboard-shell>.eyebrow{font-size:9px;letter-spacing:1.2px}
+  .dashboard-shell>h1{font-size:26px}
+  .company-form-row{align-items:stretch;flex-direction:column}
+  .company-form-row .button{width:100%}
+  .resource-create-form{grid-template-columns:1fr}
+  .resource-create-form .operation-notes{grid-column:auto}
+}
