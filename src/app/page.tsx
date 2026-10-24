@@ -31,7 +31,7 @@ export default function HomePage() {
       <a className="button button-small button-outline nav-login" href="/login">Acessar portal <Icon name="arrow" size={15}/></a>
     </nav>
 
-    <section className="hero shell">
+    <section id="inicio" className="hero shell">
       <div className="hero-copy">
         <div className="eyebrow"><span className="pulse"/> PLATAFORMA DE GESTÃO · OMSI</div>
         <h1>Leve sua empresa virtual <span>para o próximo nível.</span></h1>
