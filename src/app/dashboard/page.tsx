@@ -88,6 +88,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
           <Link href="/dashboard/garages"><b>Garagens</b><small>Consultar as garagens por empresa →</small></Link>
           <Link href="/dashboard/vehicles"><b>Frota de veículos</b><small>Consultar veículos cadastrados →</small></Link>
           <Link href="/dashboard/careers"><b>Carreiras</b><small>Consultar carreiras cadastradas →</small></Link>
+          <Link href="/dashboard/operations"><b>Operações e escalas</b><small>Registrar serviços e consultar o histórico →</small></Link>
           <div><b>Motoristas e funções</b><small>Associação por empresa e permissões</small></div>
           <div><b>Integrações OMSI</b><small>Adaptadores separados e ainda não liberados</small></div>
           <div><b>Planos e assinatura</b><small>Catálogo inicial · cobrança desativada</small></div>
