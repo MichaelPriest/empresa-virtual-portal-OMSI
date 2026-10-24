@@ -8,7 +8,8 @@ Portal de gestão de empresas virtuais para OMSI 2 clássico e openOMSI.
 - Esquema inicial com empresas, membros, garagens, veículos, carreiras, execuções, planos, assinaturas e auditoria; RLS habilitada.
 - Perfil criado automaticamente quando um usuário real é registrado no Supabase Auth.
 - Sem usuários ou empresas fictícias.
-- Login operacional, integrações reais com adaptadores OMSI e pagamentos ainda não liberados.
+- Fluxo de login/cadastro e painel inicial implementados no código, ainda pendentes de build e teste de ponta a ponta.
+- Integrações reais com adaptadores OMSI e pagamentos ainda não liberados.
 - Valores Premium ainda não definidos; nenhum checkout ou cobrança ativo.
 
 ## Desenvolvimento
