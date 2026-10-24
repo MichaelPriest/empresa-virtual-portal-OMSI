@@ -11,3 +11,23 @@ html[data-theme="light"] .auth-form input::placeholder{color:#8192a1}
 html[data-theme="light"] .auth-form input:focus{border-color:#246a91;box-shadow:0 0 0 3px #246a911a}
 .dashboard-shell .text-link{display:inline-flex;margin-top:8px;padding:10px 0}
 @media(max-width:500px){.auth-assurances{gap:6px}.auth-assurances span{font-size:8px}.auth-lead{font-size:11px}}
+
+/* Páginas funcionais de recursos por empresa */
+.resource-company-picker{margin:24px 0}
+.resource-company-picker>label{display:block;font-size:11px;color:var(--muted);margin-bottom:9px}
+.resource-company-picker select{flex:1;min-width:0;height:46px;padding:0 12px;border:1px solid #34485c;border-radius:10px;background:#09121c;color:var(--text);font:inherit}
+.resource-list{display:grid;margin-top:16px}
+.resource-row{display:flex;align-items:flex-start;gap:13px;padding:17px 0;border-top:1px solid var(--line)}
+.resource-row-main{flex:1;min-width:0}
+.resource-row-main>b{display:block;font-size:12px;margin:3px 0 11px}
+.resource-details{display:flex;flex-wrap:wrap;gap:9px 20px}
+.resource-details span{display:grid;gap:4px;color:var(--text);font-size:11px}
+.resource-details small{font-size:9px;color:var(--muted);text-transform:capitalize}
+.resource-nav{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+.resource-nav a,.company-quick-links a{display:inline-flex;align-items:center;border:1px solid #34485c;border-radius:8px;padding:8px 11px;color:var(--cyan);font-size:10px;font-weight:800}
+.resource-nav a:hover,.company-quick-links a:hover{border-color:var(--cyan);background:#70e2dc0c}
+.company-quick-links{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto}
+.company-quick-links a{padding:7px 9px}
+html[data-theme="light"] .resource-company-picker select{background:#fff;color:#1d2d3b;border-color:#b8c8d5}
+html[data-theme="light"] .resource-nav a,html[data-theme="light"] .company-quick-links a{border-color:#b8c8d5;color:#246a91;background:#f8fafc}
+@media(max-width:700px){.company-quick-links{width:100%;margin-left:48px}.resource-details{gap:8px 14px}.resource-company-picker .company-form-row{flex-direction:column}}
