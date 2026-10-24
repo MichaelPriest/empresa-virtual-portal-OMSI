@@ -1,0 +1,13 @@
+/* Refinamentos compartilhados para autenticação e páginas do portal. */
+.auth-lead{font-size:12px;line-height:1.85;color:var(--muted);margin:0}
+.auth-assurances{display:flex;flex-wrap:wrap;gap:8px;margin:17px 0 4px}
+.auth-assurances span{display:inline-flex;align-items:center;gap:6px;padding:7px 9px;border:1px solid #2b4853;border-radius:7px;background:#10232d;color:#a8d9d9;font-size:9px;font-weight:700}
+.auth-form input::placeholder{color:#6e8194;opacity:1}
+.auth-form input{transition:border-color .18s,box-shadow .18s,background .18s}
+.auth-submit{margin-top:3px}
+.auth-toggle{padding:8px 4px}
+html[data-theme="light"] .auth-assurances span{background:#e8f0f5;border-color:#c7d8e3;color:#315d78}
+html[data-theme="light"] .auth-form input::placeholder{color:#8192a1}
+html[data-theme="light"] .auth-form input:focus{border-color:#246a91;box-shadow:0 0 0 3px #246a911a}
+.dashboard-shell .text-link{display:inline-flex;margin-top:8px;padding:10px 0}
+@media(max-width:500px){.auth-assurances{gap:6px}.auth-assurances span{font-size:8px}.auth-lead{font-size:11px}}
