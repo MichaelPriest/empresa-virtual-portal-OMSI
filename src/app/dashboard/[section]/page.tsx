@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { createResource } from "./actions";
+import DeleteResourceButton from "@/components/delete-resource-button";
 
 const sections = {
   garages: { title: "Garagens", description: "Bases e instalações vinculadas às empresas que você administra.", table: "garages", fields: ["name", "city", "country_code"] },
@@ -11,7 +12,7 @@ const sections = {
 
 type SectionKey = keyof typeof sections;
 type Row = Record<string, unknown>;
-type Params = Promise<{ company?: string; saved?: string; error?: string }>;
+type Params = Promise<{ company?: string; saved?: string; deleted?: string; error?: string }>;
 
 function displayValue(value: unknown) {
   if (value === null || value === undefined || value === "") return "";
@@ -95,6 +96,9 @@ export default async function ResourcePage({ params, searchParams }: {
       <div className="eyebrow">GESTÃO DA EMPRESA</div><h1>{config.title}</h1>
       <p className="dashboard-intro">{config.description} Os dados são consultados com sua sessão autenticada e respeitam as políticas de acesso do banco.</p>
       {query.saved === "1" && <div className="auth-notice">Registro salvo com sucesso.</div>}
+      {query.deleted === "1" && <div className="auth-notice">Registro excluído com sucesso.</div>}
+      {query.error === "linked" && <div className="auth-error">Esta carreira possui serviços registrados e não pode ser excluída para preservar o histórico operacional.</div>}
+      {query.error === "delete" && <div className="auth-error">Não foi possível excluir. Verifique sua função na empresa e se o registro ainda está em uso.</div>}
       {query.error === "validation" && <div className="auth-error">Confira os campos obrigatórios e os valores selecionados.</div>}
       {query.error === "save" && <div className="auth-error">Não foi possível salvar. Verifique se o registro já existe e se sua função permite essa operação.</div>}
       {companies && companies.length > 0 ? <form className="resource-company-picker" action={`/dashboard/${key}`} method="get">
@@ -112,7 +116,7 @@ export default async function ResourcePage({ params, searchParams }: {
             <div className="resource-list">{rows.map((row, index) => {
               const heading = [ "name", "display_name", "fleet_number", "title" ].map(field => displayValue(row[field])).find(Boolean) || `${config.title.slice(0, -1)} ${index + 1}`;
               const details = config.fields.filter(field => !["name", "display_name", "fleet_number", "title"].includes(field) && displayValue(row[field])).map(field => ({ field, value: displayValue(row[field]) }));
-              return <article className="resource-row" key={String(row.id ?? index)}><span className="company-avatar">{heading.slice(0,1).toUpperCase()}</span><div className="resource-row-main"><b>{heading}</b><div className="resource-details">{details.map(detail => <span key={detail.field}><small>{detail.field.replaceAll("_", " ")}</small>{detail.field === "garage_id" ? (garages.find(g => g.id === detail.value)?.name ?? "Garagem vinculada") : detail.value}</span>)}</div></div></article>;
+              return <article className="resource-row" key={String(row.id ?? index)}><span className="company-avatar">{heading.slice(0,1).toUpperCase()}</span><div className="resource-row-main"><b>{heading}</b><div className="resource-details">{details.map(detail => <span key={detail.field}><small>{detail.field.replaceAll("_", " ")}</small>{detail.field === "garage_id" ? (garages.find(g => g.id === detail.value)?.name ?? "Garagem vinculada") : detail.value}</span>)}</div></div><DeleteResourceButton section={key} companyId={selected.id} resourceId={String(row.id)} label={heading} /></article>;
             })}</div>}
         </section>
       </>}
