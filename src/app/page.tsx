@@ -24,11 +24,10 @@ const features = [
 ];
 
 export default function HomePage() {
-  return <main className="marketing">
-    <nav className="nav shell">
-      <a className="brand" href="#" aria-label="Empresa Virtual OMSI - início"><span className="brand-mark"><Icon name="bus" size={20}/></span><span>EMPRESA VIRTUAL <b>OMSI</b></span></a>
-      <div className="nav-links"><a href="#recursos">Plataforma</a><a href="#planos">Planos</a><a href="#status">Estado do projeto</a></div>
-      <a className="button button-small button-outline nav-login" href="/login">Acessar portal <Icon name="arrow" size={15}/></a>
+  return <main className="marketing public-app">\n    <aside className="public-sidebar">\n      <a className="brand public-brand" href="#inicio" aria-label="Empresa Virtual OMSI - início"><span className="brand-mark"><Icon name="bus" size={20}/></span><span>EMPRESA VIRTUAL <b>OMSI</b></span></a>\n      <div className="public-nav-label">MENU PRINCIPAL</div>\n      <nav className="public-side-nav" aria-label="Atalhos públicos">\n        <a className="public-side-link active" href="#inicio"><span><Icon name="gauge" size={18}/></span>Visão geral</a>\n        <a className="public-side-link" href="#recursos"><span><Icon name="layers" size={18}/></span>Plataforma</a>\n        <a className="public-side-link" href="#planos"><span><Icon name="building" size={18}/></span>Planos e recursos</a>\n        <a className="public-side-link" href="#status"><span><Icon name="shield" size={18}/></span>Status do projeto</a>\n        <a className="public-side-link" href="/login"><span><Icon name="users" size={18}/></span>Acessar / criar conta</a>\n      </nav>\n      <div className="sidebar-plan-card"><span className="sidebar-plan-icon"><Icon name="bus" size={18}/></span><b>Comece gratuitamente</b><p>Organize sua empresa virtual em um só lugar.</p><a href="/login">Criar minha conta <Icon name="arrow" size={14}/></a></div>\n      <div className="public-sidebar-footer"><span className="sidebar-status-dot"/> Projeto em desenvolvimento <small>OMSI 2 clássico · openOMSI</small></div>\n    </aside>\n    <div className="public-content">
+    <nav className="nav public-topbar">
+      <div className="topbar-context"><span className="topbar-mobile-brand"><Icon name="bus" size={18}/></span><div><small>PORTAL PÚBLICO</small><b>Empresa Virtual OMSI</b></div></div>
+      <div className="topbar-actions"><span className="topbar-status"><i/> Plataforma em evolução</span><a className="button button-small button-primary nav-login" href="/login">Acessar portal <Icon name="arrow" size={15}/></a></div>
     </nav>
 
     <section id="inicio" className="hero shell">
@@ -60,5 +59,5 @@ export default function HomePage() {
     <section id="status" className="section shell status-section"><div className="status-card"><div><div className="eyebrow">TRANSPARÊNCIA DO PROJETO</div><h2>Construído com cuidado.<br/><span>Liberado por etapas.</span></h2><p>A plataforma está em desenvolvimento contínuo. A base web e a autenticação estão no projeto; os módulos operacionais, os plugins e os pagamentos dependem de validação antes de serem anunciados como disponíveis.</p><a href="/login" className="button button-outline status-cta">Acessar o portal <Icon name="arrow" size={16}/></a></div><div className="status-list"><div><i className="done"><Icon name="check" size={15}/></i><span><b>Projeto Supabase dedicado</b><small>Separado dos demais projetos</small></span></div><div><i className="done"><Icon name="check" size={15}/></i><span><b>Estrutura inicial e controle de acesso</b><small>Base de dados e políticas previstas no código</small></span></div><div><i className="progress">◷</i><span><b>Painel de gestão</b><small>Em implementação e validação</small></span></div><div><i className="pending">○</i><span><b>Plugins e cobrança</b><small>Não liberados nesta etapa</small></span></div></div></div></section>
 
     <footer className="footer"><div className="shell footer-inner"><a className="brand" href="#"><span className="brand-mark"><Icon name="bus" size={18}/></span><span>EMPRESA VIRTUAL <b>OMSI</b></span></a><span>Feito para quem vive o transporte virtual.</span><span>© {new Date().getFullYear()} · Projeto independente</span></div></footer>
-  </main>;
+    </div>\n  </main>;
 }
