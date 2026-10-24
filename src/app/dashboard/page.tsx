@@ -12,7 +12,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
   if (authError || !user) redirect("/login");
   const { data: companies, error } = await supabase.from("companies").select("id,name,slug,created_at").order("created_at", { ascending: false });
   return <main className="dashboard-page">
-    <header className="dashboard-nav"><Link className="brand" href="/"><span className="brand-mark">EV</span><span>EMPRESA VIRTUAL <b>OMSI</b></span></Link><span>{user.email}</span><Link className="button button-outline button-small" href="/auth/signout">Sair</Link></header>
+    <header className="dashboard-nav"><Link className="brand" href="/"><span className="brand-mark">EV</span><span>EMPRESA VIRTUAL <b>OMSI</b></span></Link><span>{user.email}</span><form action="/auth/signout" method="post"><button className="button button-outline button-small" type="submit">Sair</button></form></header>
     <div className="dashboard-shell"><div className="eyebrow">ÁREA AUTENTICADA</div><h1>Visão geral</h1><p className="dashboard-intro">Gerencie suas empresas. Os dados abaixo vêm do banco real.</p>
     {params.created && <div className="auth-notice">Empresa criada com sucesso.</div>}{params.error && <div className="auth-error">Não foi possível criar a empresa. Verifique o nome e tente novamente.</div>}
     <section className="dashboard-panel"><div className="panel-heading"><div><h2>Minhas empresas</h2><p>Comece criando sua empresa virtual.</p></div><span className="count-pill">{companies?.length ?? 0} cadastrada(s)</span></div>
