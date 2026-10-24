@@ -219,3 +219,8 @@ html[data-theme="dark"] .resource-delete-button:hover{background:#3a1d22}
 .auth-page .auth-notice{color:#176847!important;background:#eaf8f0;border-color:#bce5cd}
 .auth-page .auth-error{color:#9b3535!important;background:#fff1f0;border:1px solid #f1c7c3;border-radius:8px;padding:12px;font-size:11px;line-height:1.7}
 @media(max-width:500px){.auth-card{padding:27px 21px}}
+
+
+/* O tema claro é fixo nas telas de autenticação e no painel; ocultar o alternador nessas rotas evita um controle que não altera essas telas. */
+body:has(.auth-page) .theme-toggle,
+body:has(.dashboard-page) .theme-toggle{display:none!important}
