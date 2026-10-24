@@ -38,11 +38,12 @@ export default function LoginForm() {
   return <main className="auth-page"><section className="auth-card">
     <Link className="brand" href="/"><span className="brand-mark">EV</span><span>EMPRESA VIRTUAL <b>OMSI</b></span></Link>
     <div className="eyebrow">ACESSO À PLATAFORMA</div><h1>{mode === "signin" ? "Entre na sua conta" : "Crie sua conta"}</h1>
-    <p>Use seu próprio e-mail. Não há usuários de demonstração ou contas fictícias.</p>
+    <p className="auth-lead">Acesse sua central de empresas, garagens e carreiras virtuais.</p>
+    <div className="auth-assurances"><span>◈ Conta pessoal</span><span>✓ Sem usuários fictícios</span></div>
     <form className="auth-form" onSubmit={submit}>
       {mode === "signup" && <label>Nome para exibição<input autoComplete="name" value={name} onChange={e => setName(e.target.value)} required minLength={2} maxLength={100} /></label>}
-      <label>E-mail<input type="email" autoComplete="email" value={email} onChange={e => setEmail(e.target.value)} required maxLength={254} /></label>
-      <label>Senha<input type="password" autoComplete={mode === "signin" ? "current-password" : "new-password"} value={password} onChange={e => setPassword(e.target.value)} required minLength={8} maxLength={128} /></label>
+      <label>E-mail<input type="email" autoComplete="email" inputMode="email" placeholder="voce@exemplo.com" value={email} onChange={e => setEmail(e.target.value)} required maxLength={254} /></label>
+      <label>Senha<input type="password" autoComplete={mode === "signin" ? "current-password" : "new-password"} placeholder={mode === "signin" ? "Sua senha" : "Mínimo de 8 caracteres"} value={password} onChange={e => setPassword(e.target.value)} required minLength={8} maxLength={128} /></label>
       <button className="button button-primary auth-submit" disabled={busy} type="submit">{busy ? "Aguarde..." : mode === "signin" ? "Entrar →" : "Criar conta →"}</button>
     </form>
     {error && <p className="auth-error" role="alert">{error}</p>}
