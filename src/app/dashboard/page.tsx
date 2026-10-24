@@ -76,7 +76,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
                 <span><b>{company.vehicleCount}</b><small>Veículos</small></span>
                 <span><b>{company.careerCount}</b><small>Carreiras</small></span>
               </div>
-              <span className="company-status">Ativa</span>
+              <div className="company-quick-links"><Link href={`/dashboard/garages?company=${company.id}`}>Garagens</Link><Link href={`/dashboard/vehicles?company=${company.id}`}>Frota</Link><Link href={`/dashboard/careers?company=${company.id}`}>Carreiras</Link></div><span className="company-status">Ativa</span>
             </article>
           )}</div> :
           <div className="empty-state"><h3>Nenhuma empresa por enquanto</h3><p>Crie a primeira empresa usando o formulário acima. Sua conta será vinculada como proprietária automaticamente pelo banco.</p></div>}
@@ -85,8 +85,9 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
       <section className="dashboard-panel">
         <div className="panel-heading"><div><h2>Central de operação</h2><p>Os módulos abaixo serão habilitados por etapas, com persistência e autorização reais.</p></div></div>
         <div className="roadmap-grid">
-          <div><b>Garagens e frota</b><small>Base de dados preparada · interface em construção</small></div>
-          <div><b>Carreiras e escalas</b><small>Planejamento e histórico · integração futura</small></div>
+          <Link href="/dashboard/garages"><b>Garagens</b><small>Consultar as garagens por empresa →</small></Link>
+          <Link href="/dashboard/vehicles"><b>Frota de veículos</b><small>Consultar veículos cadastrados →</small></Link>
+          <Link href="/dashboard/careers"><b>Carreiras</b><small>Consultar carreiras cadastradas →</small></Link>
           <div><b>Motoristas e funções</b><small>Associação por empresa e permissões</small></div>
           <div><b>Integrações OMSI</b><small>Adaptadores separados e ainda não liberados</small></div>
           <div><b>Planos e assinatura</b><small>Catálogo inicial · cobrança desativada</small></div>
