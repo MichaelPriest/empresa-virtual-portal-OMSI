@@ -76,7 +76,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
                 <span><b>{company.vehicleCount}</b><small>Veículos</small></span>
                 <span><b>{company.careerCount}</b><small>Carreiras</small></span>
               </div>
-              <div className="company-quick-links"><Link href={`/dashboard/garages?company=${company.id}`}>Garagens</Link><Link href={`/dashboard/vehicles?company=${company.id}`}>Frota</Link><Link href={`/dashboard/careers?company=${company.id}`}>Carreiras</Link></div><span className="company-status">Ativa</span>
+              <div className="company-quick-links"><Link href={`/dashboard/garages?company=${company.id}`}>Garagens</Link><Link href={`/dashboard/vehicles?company=${company.id}`}>Frota</Link><Link href={`/dashboard/careers?company=${company.id}`}>Carreiras</Link><Link href={`/dashboard/operations?company=${company.id}`}>Operações</Link></div><span className="company-status">Ativa</span>
             </article>
           )}</div> :
           <div className="empty-state"><h3>Nenhuma empresa por enquanto</h3><p>Crie a primeira empresa usando o formulário acima. Sua conta será vinculada como proprietária automaticamente pelo banco.</p></div>}
